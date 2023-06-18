@@ -10,11 +10,6 @@ namespace MvvmLightBlazorComponent
         [Inject]
         public IMvvmBinder mvvmBinder { get; set; }
 
-        //public BlazorMvvmComponent()
-        //{
-        //    //this.mvvmBinder = mvvmBinder;
-        //}
-
         protected TValue? Bind<TInput, TValue>(INotifyPropertyChanged viewmodel, Expression<Func<TInput, TValue?>> bindingExpression) where TInput : INotifyPropertyChanged
         {
             this.mvvmBinder.ViewModelPropertyChanged -= PropertyChangedEventHandler;
