@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using MvvmLightCore;
 using System.ComponentModel;
 using System.Linq.Expressions;
@@ -8,16 +9,16 @@ namespace MvvmLightBlazorComponent
     public abstract class BlazorMvvmComponent : ComponentBase
     {
         [Inject]
-        public IMvvmBinder mvvmBinder { get; set; }
-
+        public IMvvmBinder MvvmBinder { get; set; }
+       
         protected TValue? Bind<TInput, TValue>(INotifyPropertyChanged viewmodel, Expression<Func<TInput, TValue?>> bindingExpression) where TInput : INotifyPropertyChanged
         {
-            this.mvvmBinder.ViewModelPropertyChanged -= PropertyChangedEventHandler;
-            this.mvvmBinder.ViewModelPropertyChanged += PropertyChangedEventHandler;
-            return this.mvvmBinder.Bind(viewmodel, bindingExpression);
+            this.MvvmBinder.ViewModelPropertyChanged -= PropertyChangedEventHandler;
+            this.MvvmBinder.ViewModelPropertyChanged += PropertyChangedEventHandler;
+            return this.MvvmBinder.Bind(viewmodel, bindingExpression);
         }
 
-        public void PropertyChangedEventHandler(object? sender, PropertyChangedEventArgs e)
+        public virtual void PropertyChangedEventHandler(object? sender, PropertyChangedEventArgs e)
         {
             this.InvokeAsync(()=>this.StateHasChanged());
         }
