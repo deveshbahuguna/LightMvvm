@@ -1,5 +1,5 @@
 ﻿using Castle.Core.Logging;
-using LightMvvmUT.MvvmLightBlazorComponent.TestData;
+using LIghtMvvmUT.TestData;
 using Microsoft.Extensions.Logging;
 using Moq;
 using MvvmLightBlazorComponent;

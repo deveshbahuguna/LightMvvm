@@ -8,24 +8,24 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LightMvvmUT.MvvmLightBlazorComponent.TestData
+namespace LIghtMvvmUT.TestData
 {
     public class SampleComponentTest : BlazorMvvmComponent
     {
         public bool IsPropChangeEventInvoked { get; set; } = false;
         public TValue? Bind<TInput, TValue>(INotifyPropertyChanged viewmodel, Expression<Func<TInput, TValue?>> bindingExpression) where TInput : INotifyPropertyChanged
         {
-            return base.Bind<TInput, TValue>(viewmodel, bindingExpression);
+            return base.Bind(viewmodel, bindingExpression);
         }
 
         public override void PropertyChangedEventHandler(object? sender, PropertyChangedEventArgs e)
         {
-            this.IsPropChangeEventInvoked = true;
+            IsPropChangeEventInvoked = true;
         }
 
         public SampleComponentTest(IMvvmBinder mvvmBinder)
         {
-            this.MvvmBinder = mvvmBinder;
+            MvvmBinder = mvvmBinder;
         }
     }
 }

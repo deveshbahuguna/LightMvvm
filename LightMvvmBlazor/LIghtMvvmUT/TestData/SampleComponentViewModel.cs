@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LightMvvmUT.MvvmLightBlazorComponent.TestData
+namespace LIghtMvvmUT.TestData
 {
     internal class SampleComponentViewModel : INotifyPropertyChanged
     {
@@ -18,7 +18,8 @@ namespace LightMvvmUT.MvvmLightBlazorComponent.TestData
             {
                 if (value != _counter)
                 {
-                    this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Counter)));
+                    _counter = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Counter)));
                 }
             }
         }
