@@ -5,37 +5,38 @@ namespace MvvmLightCore.Binder
 {
     public class BindableObject : IBindableObject
     {
-        public BindableObject(WeakReference<INotifyPropertyChanged>? viewModel)
+        public BindableObject(WeakReference<INotifyPropertyChanged>? notifyObj)
         {
-            ViewModel = viewModel;
+            _notifyObj = notifyObj ?? throw new NullReferenceException("notify obj is null");
         }
 
-        public WeakReference<INotifyPropertyChanged>? ViewModel { get; set; }
+        private WeakReference<INotifyPropertyChanged> _notifyObj;
+        public WeakReference<INotifyPropertyChanged> NotifyObj => _notifyObj;
         public HashSet<PropertyInfo?> Properties { get; set; } = new();
 
-        public bool CheckIfBindingKeyAreSame(IBindableObject toCheckObject)
+        public bool NotifyObjAlreadyExist(IBindableObject toCheckObject)
         {
-            if (toCheckObject.ViewModel != null && toCheckObject.ViewModel.TryGetTarget(out INotifyPropertyChanged? keyObject)
-             && this.ViewModel != null &&  this.ViewModel.TryGetTarget(out INotifyPropertyChanged? currentObjectVM))
+            if (toCheckObject.NotifyObj.TryGetTarget(out INotifyPropertyChanged? keyObject)
+             &&  NotifyObj.TryGetTarget(out INotifyPropertyChanged? currentObjectVM))
             {                
                 return keyObject.Equals(currentObjectVM);
             }
             return false;
         }
 
-        public bool CheckIfBindingAlreadyExist(IBindableObject toCheckObject)
+        public bool NotifyObjPropAlreadyExist(IBindableObject toCheckObject)
         {
-            return CheckIfBindingKeyAreSame(toCheckObject) && this.Properties.Contains(toCheckObject.Properties.First());
+            return NotifyObjAlreadyExist(toCheckObject) && this.Properties.Contains(toCheckObject.Properties.First());
         }
 
         public int GetHashcode
         {
             get
             {
-                if (this.ViewModel != null)
+                if (this.NotifyObj != null)
                 {
                     INotifyPropertyChanged? vm;
-                    return this.ViewModel.TryGetTarget(out vm).GetHashCode();
+                    return this.NotifyObj.TryGetTarget(out vm).GetHashCode();
                 }
                 return -1;
             }

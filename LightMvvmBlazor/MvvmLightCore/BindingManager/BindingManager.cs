@@ -15,11 +15,11 @@ namespace MvvmLightCore.Binder
 
         public void AddBinding(IBindableObject toFindBindObject)
         {
-            if (toFindBindObject.ViewModel != null && toFindBindObject.Properties.First() != null)
+            if (toFindBindObject.NotifyObj != null && toFindBindObject.Properties.First() != null)
             {
                 if (!propVmMapping.ContainsKey(toFindBindObject.GetHashcode))
                 {
-                    var IBindableObject = new BindableObject(toFindBindObject.ViewModel);
+                    var IBindableObject = new BindableObject(toFindBindObject.NotifyObj);
                     propVmMapping.Add(toFindBindObject.GetHashcode, new List<IBindableObject>());
                     IBindableObject.Properties.Add(toFindBindObject.Properties.First());
                     propVmMapping[toFindBindObject.GetHashcode].Add(IBindableObject);
@@ -34,7 +34,7 @@ namespace MvvmLightCore.Binder
                     else
                     {
                         //Update the prop info in the view model.
-                        var vm = (from obj in  this.propVmMapping[toFindBindObject.GetHashcode] where obj.CheckIfBindingKeyAreSame(toFindBindObject) select obj).First();
+                        var vm = (from obj in  this.propVmMapping[toFindBindObject.GetHashcode] where obj.NotifyObjAlreadyExist(toFindBindObject) select obj).First();
                         vm.Properties.Add(toFindBindObject.Properties.First());
                     }
 
@@ -45,7 +45,7 @@ namespace MvvmLightCore.Binder
         public bool CheckIfBindingAlreadyExist(IBindableObject toFindBindObject)
         {
             return this.propVmMapping.ContainsKey(toFindBindObject.GetHashcode) &&
-                                  this.propVmMapping[toFindBindObject.GetHashcode].Any(obj => obj.CheckIfBindingAlreadyExist(toFindBindObject));
+                                  this.propVmMapping[toFindBindObject.GetHashcode].Any(obj => obj.NotifyObjPropAlreadyExist(toFindBindObject));
         }
 
         public void RemoveBinding(IBindableObject IBindableObject)
@@ -66,7 +66,7 @@ namespace MvvmLightCore.Binder
         {
             if (CheckIfBindingAlreadyExist(IBindableObject))
             {
-              var bindableObj =  (from ele in this.propVmMapping[IBindableObject.GetHashcode] where ele.CheckIfBindingKeyAreSame(IBindableObject) select ele).First();
+              var bindableObj =  (from ele in this.propVmMapping[IBindableObject.GetHashcode] where ele.NotifyObjAlreadyExist(IBindableObject) select ele).First();
                 if (bindableObj.Properties.TryGetValue(bindableObj.Properties.First(), out PropertyInfo? propertyInfo))
                 {
                     return propertyInfo;
