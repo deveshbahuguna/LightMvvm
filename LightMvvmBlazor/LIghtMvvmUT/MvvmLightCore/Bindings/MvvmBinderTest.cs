@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace LIghtMvvmUT.MvvmLightCore.Bindings
     [ExcludeFromCodeCoverage]
     public class MvvmBinderTest
     {
-        private IMvvmBinder _mvvmBinder;
+        private MvvmBinder _mvvmBinder;
         private SampleComponentViewModel _sampleVm;
         private readonly Mock<IBindingManager> _bindingManager;
         public MvvmBinderTest()
@@ -70,6 +71,19 @@ namespace LIghtMvvmUT.MvvmLightCore.Bindings
 
             _bindingManager.Verify(x => x.AddBinding(It.IsAny<IBindableObject>()), Times.Never);
             Assert.Equal(expectedCount, actualResult);  
+        }
+
+        [Fact]
+        public void Bind_BindingExpressionIncorrect_ThrowNotImplementedException()
+        {
+            //Arrange
+            _bindingManager.Setup(x => x.CheckIfBindingAlreadyExist(It.IsAny<BindableObject>())).Returns(true);
+
+            //Act
+            var action =  ()=> { _mvvmBinder.Bind<SampleComponentViewModel, int>(_sampleVm, (_sampleVm) => 0); };
+
+            //Assert
+            Assert.Throws<NotSupportedException>(action);
         }
 
 
