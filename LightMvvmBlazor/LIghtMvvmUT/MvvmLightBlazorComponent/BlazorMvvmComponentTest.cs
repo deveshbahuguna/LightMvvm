@@ -5,11 +5,13 @@ using Moq;
 using MvvmLightBlazorComponent;
 using MvvmLightCore;
 using MvvmLightCore.Binder;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace LightMvvmUT.MvvmLightBlazorComponent
 {
+    [ExcludeFromCodeCoverage]
     public class BlazorMvvmComponentTest
     {
         private readonly SampleComponentTest balzorComponentTest;
