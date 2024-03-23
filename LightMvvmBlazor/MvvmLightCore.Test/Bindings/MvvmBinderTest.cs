@@ -1,7 +1,7 @@
-﻿using LIghtMvvmUT.TestData;
-using Moq;
+﻿using Moq;
 using MvvmLightCore;
 using MvvmLightCore.Binder;
+using MvvmLightCore.Test.TestData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LIghtMvvmUT.MvvmLightCore.Bindings
+namespace MvvmLightCore.Test.Bindings
 {
     [ExcludeFromCodeCoverage]
     public class MvvmBinderTest
@@ -30,7 +30,7 @@ namespace LIghtMvvmUT.MvvmLightCore.Bindings
         public void Bind_BindNewProperty_AddPropToBindingManager()
         {
             _bindingManager.Setup(x => x.CheckIfBindingAlreadyExist(It.IsAny<IBindableObject>())).Returns(false);
-            
+
             _mvvmBinder.Bind<SampleComponentViewModel, int>(_sampleVm, x => x.Counter);
 
             _bindingManager.Verify(x => x.CheckIfBindingAlreadyExist(It.IsAny<IBindableObject>()), Times.Once);
@@ -63,14 +63,14 @@ namespace LIghtMvvmUT.MvvmLightCore.Bindings
         [Fact]
         public void Bind_BindExistingProperty_ReturnsSamePropValue()
         {
-          _sampleVm.Counter = 1;
+            _sampleVm.Counter = 1;
             var expectedCount = 1;
             _bindingManager.Setup(x => x.CheckIfBindingAlreadyExist(It.IsAny<BindableObject>())).Returns(true);
 
             var actualResult = _mvvmBinder.Bind<SampleComponentViewModel, int>(_sampleVm, x => x.Counter);
 
             _bindingManager.Verify(x => x.AddBinding(It.IsAny<IBindableObject>()), Times.Never);
-            Assert.Equal(expectedCount, actualResult);  
+            Assert.Equal(expectedCount, actualResult);
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace LIghtMvvmUT.MvvmLightCore.Bindings
             _bindingManager.Setup(x => x.CheckIfBindingAlreadyExist(It.IsAny<BindableObject>())).Returns(true);
 
             //Act
-            var action =  ()=> { _mvvmBinder.Bind<SampleComponentViewModel, int>(_sampleVm, (_sampleVm) => 0); };
+            var action = () => { _mvvmBinder.Bind<SampleComponentViewModel, int>(_sampleVm, (_sampleVm) => 0); };
 
             //Assert
             Assert.Throws<NotSupportedException>(action);

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LIghtMvvmUT.TestData
+namespace MvvmLightCore.Test.TestData
 {
     [ExcludeFromCodeCoverage]
     internal class SampleComponentViewModel : INotifyPropertyChanged

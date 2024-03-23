@@ -1,5 +1,5 @@
-﻿using LIghtMvvmUT.TestData;
-using MvvmLightCore.Binder;
+﻿using MvvmLightCore.Binder;
+using MvvmLightCore.Test.TestData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LIghtMvvmUT.MvvmLightCore.Bindings
+namespace MvvmLightCore.Test.Bindings
 {
     [ExcludeFromCodeCoverage]
     public class BindableObjectTest
@@ -25,7 +25,7 @@ namespace LIghtMvvmUT.MvvmLightCore.Bindings
         {
             BindableObject bindableObject = new BindableObject(new WeakReference<INotifyPropertyChanged>(_viewModel));
             BindableObject addBindableObj = new BindableObject(new WeakReference<INotifyPropertyChanged>(_viewModel));
-         
+
             var actualResult = bindableObject.NotifyObjAlreadyExist(addBindableObj);
 
             Assert.True(actualResult);

@@ -1,15 +1,10 @@
 ﻿using MvvmLightBlazorComponent;
 using MvvmLightCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace LIghtMvvmUT.TestData
+namespace MvvmLightCore.Test.TestData
 {
     [ExcludeFromCodeCoverage]
     public class SampleComponentTest : BlazorMvvmComponent

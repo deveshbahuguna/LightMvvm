@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LIghtMvvmUT.MvvmLightCore.Registry
+namespace MvvmLightCore.Test.Registry
 {
     [ExcludeFromCodeCoverage]
     public class MvvmLightCoreDIRegistryTest
